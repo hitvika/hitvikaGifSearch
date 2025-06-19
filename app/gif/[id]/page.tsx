@@ -15,13 +15,13 @@ async function getGifById(slug: string) {
 }
 
 type Props = {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 };
 
 export default async function GifDetailPage({ params }: Props) {
-  const gif = await getGifById(params.id);
+  const { id } = await params; // ✅ await params since it's a Promise
+  const gif = await getGifById(id);
+
   if (!gif) return notFound();
 
   return (
