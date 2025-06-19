@@ -8,7 +8,7 @@ function extractIdFromSlug(slug: string) {
 async function getGifById(slug: string) {
   const id = extractIdFromSlug(slug);
   const res = await fetch(
-    `https://api.giphy.com/v1/gifs/${id}?api_key=paiJj3iTTUT8AkTGWHICumQSwycjA9ii`
+    `https://api.giphy.com/v1/gifs/${id}?api_key=${process.env.API_KEY}`
   );
   const data = await res.json();
   return data.data;

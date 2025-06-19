@@ -3,8 +3,25 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import GifGrid from "@/components/GifGrid";
 import { fetchTrendingGifs, fetchSearchGifs } from "@/lib/gify";
 
+type Gif = {
+  id: string;
+  title: string;
+  images: {
+    original: {
+      url: string;
+      height: string;
+      width: string;
+    };
+    downsized_medium: {
+      url: string;
+      height: string;
+      width: string;
+    };
+  };
+};
+
 export default function Home() {
-  const [gifs, setGifs] = useState<any[]>([]);
+  const [gifs, setGifs] = useState<Gif[]>([]);
   const [query, setQuery] = useState("");
   const [offset, setOffset] = useState(0);
   const [mode, setMode] = useState<"trending" | "search">("trending");
