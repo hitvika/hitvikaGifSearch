@@ -14,9 +14,13 @@ async function getGifById(slug: string) {
   return data.data;
 }
 
-// ✅ NO destructuring in function parameter
-export default async function GifDetailPage(props: { params: { id: string } }) {
-  const { params } = props;
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function GifDetailPage({ params }: Props) {
   const gif = await getGifById(params.id);
   if (!gif) return notFound();
 
@@ -25,18 +29,19 @@ export default async function GifDetailPage(props: { params: { id: string } }) {
       <h1 className="text-2xl font-semibold mb-4">{gif.title || "Untitled"}</h1>
       <img
         src={gif.images.original.url}
-        alt={gif.title}
+        alt={gif.title || "GIF Image"}
         className="w-full rounded shadow"
       />
       <div className="mt-4 space-y-2">
         <p><strong>Username:</strong> {gif.username || "Anonymous"}</p>
-        <p><strong>Rating:</strong> {gif.rating.toUpperCase()}</p>
+        <p><strong>Rating:</strong> {gif.rating?.toUpperCase() || "N/A"}</p>
         <p>
           <strong>Source:</strong>{" "}
           <a
             href={gif.source || gif.url}
             className="text-blue-500 underline"
             target="_blank"
+            rel="noopener noreferrer"
           >
             {gif.source || gif.url}
           </a>
