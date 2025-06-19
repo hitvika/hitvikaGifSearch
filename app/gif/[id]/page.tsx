@@ -1,11 +1,5 @@
 import { notFound } from "next/navigation";
 
-type GifDetailPageProps = {
-  params: {
-    id: string;
-  };
-};
-
 function extractIdFromSlug(slug: string) {
   const parts = slug.split("-");
   return parts[parts.length - 1];
@@ -20,7 +14,12 @@ async function getGifById(slug: string) {
   return data.data;
 }
 
-export default async function GifDetailPage({ params }: GifDetailPageProps) {
+// ✅ Correct typing for App Router
+export default async function GifDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const gif = await getGifById(params.id);
   if (!gif) return notFound();
 
@@ -35,8 +34,13 @@ export default async function GifDetailPage({ params }: GifDetailPageProps) {
       <div className="mt-4 space-y-2">
         <p><strong>Username:</strong> {gif.username || "Anonymous"}</p>
         <p><strong>Rating:</strong> {gif.rating.toUpperCase()}</p>
-        <p><strong>Source:</strong>{" "}
-          <a href={gif.source || gif.url} className="text-blue-500 underline" target="_blank">
+        <p>
+          <strong>Source:</strong>{" "}
+          <a
+            href={gif.source || gif.url}
+            className="text-blue-500 underline"
+            target="_blank"
+          >
             {gif.source || gif.url}
           </a>
         </p>
