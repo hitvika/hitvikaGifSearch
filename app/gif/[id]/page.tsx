@@ -14,7 +14,6 @@ async function getGifById(slug: string) {
   return data.data;
 }
 
-// ✅ Correct typing for App Router
 export default async function GifDetailPage({
   params,
 }: {
