@@ -14,14 +14,14 @@ async function getGifById(slug: string) {
   return data.data;
 }
 
-type Props = {
+type GifDetailParams = {
   params: { id: string };
 };
 
-export default async function GifDetailPage(props: Props) {
-  const { params } = props;
+export default async function GifDetailPage({ params }: GifDetailParams) {
   const gif = await getGifById(params.id);
   if (!gif) return notFound();
+
   return (
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-2xl font-semibold mb-4">{gif.title || "Untitled"}</h1>
