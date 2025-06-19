@@ -14,11 +14,9 @@ async function getGifById(slug: string) {
   return data.data;
 }
 
-type GifDetailParams = {
-  params: { id: string };
-};
-
-export default async function GifDetailPage({ params }: GifDetailParams) {
+// ✅ NO destructuring in function parameter
+export default async function GifDetailPage(props: { params: { id: string } }) {
+  const { params } = props;
   const gif = await getGifById(params.id);
   if (!gif) return notFound();
 
